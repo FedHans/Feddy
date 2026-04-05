@@ -1,0 +1,12 @@
+{
+  "holdings": [
+    {"name": "S&P 500 ETF", "ticker": "SPY", "category": "Equities"},
+    {"name": "Nasdaq 100 ETF", "ticker": "QQQ", "category": "Equities"},
+    {"name": "Gold ETF", "ticker": "GLD", "category": "Precious Metals"},
+    {"name": "BTC Spot ETF (All Issuers)", "ticker": "BTC-ETF", "category": "Crypto"}
+  ],
+  "watchlist": [],
+  "interest_areas": ["AI", "Energy", "Crypto", "Commodities"],
+  "focus_regions": ["US", "China"],
+  "hotspot_regions": []
+}

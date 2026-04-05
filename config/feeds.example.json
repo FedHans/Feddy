@@ -1,0 +1,42 @@
+{
+  "_comment": "RSS feed registry. Copy to feeds.json and customize. Each feed can be overridden via environment variable.",
+  "feeds": [
+    {"name": "fed_macro",        "category": "macro",      "url": "https://www.federalreserve.gov/feeds/press_all.xml",        "env_var": "RSS_FED_MACRO"},
+    {"name": "bea_macro",        "category": "macro",      "url": "https://apps.bea.gov/rss/rss.xml",                          "env_var": "RSS_BEA_MACRO"},
+    {"name": "whitehouse",       "category": "government", "url": "https://www.whitehouse.gov/feed/",                           "env_var": "RSS_WHITEHOUSE"},
+    {"name": "treasury_press",   "category": "government", "url": "https://home.treasury.gov/system/files/136/press-releases.xml", "env_var": "RSS_TREASURY_PRESS"},
+    {"name": "sec_press",        "category": "government", "url": "https://www.sec.gov/news/pressreleases.rss",                 "env_var": "RSS_SEC_PRESS"},
+    {"name": "sec_speeches",     "category": "government", "url": "https://www.sec.gov/news/speeches-statements.rss",           "env_var": "RSS_SEC_SPEECHES"},
+    {"name": "occ_news",         "category": "government", "url": "https://www.occ.gov/static/news-issuances/news-releases/news-releases.xml", "env_var": "RSS_OCC_NEWS"},
+    {"name": "fdic_press",       "category": "government", "url": "https://www.fdic.gov/news/press-releases/rss.xml",           "env_var": "RSS_FDIC_PRESS"},
+    {"name": "doj_opa",          "category": "government", "url": "https://www.justice.gov/feeds/opa/justice-news.xml",          "env_var": "RSS_DOJ_OPA"},
+    {"name": "cftc_press",       "category": "government", "url": "https://www.cftc.gov/Newsroom/PressRoom/RSS",                "env_var": "RSS_CFTC_PRESS"},
+
+    {"name": "mw_bulletins",     "category": "markets",    "url": "https://feeds.content.dowjones.io/public/rss/mw_bulletins",  "env_var": "RSS_MW_BULLETINS"},
+    {"name": "sa_currents",      "category": "markets",    "url": "https://seekingalpha.com/market_currents.xml",               "env_var": "RSS_SA_CURRENTS"},
+    {"name": "wsj_markets",      "category": "markets",    "url": "https://feeds.a.dj.com/rss/RSSMarketsMain.xml",              "env_var": "RSS_WSJ_MARKETS"},
+    {"name": "cnbc_economy",     "category": "markets",    "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258", "env_var": "RSS_CNBC_ECONOMY"},
+    {"name": "cnbc_investing",   "category": "markets",    "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=15839069", "env_var": "RSS_CNBC_INVESTING"},
+    {"name": "bloomberg_mkt",    "category": "markets",    "url": "https://feeds.bloomberg.com/markets/news.rss",               "env_var": "RSS_BLOOMBERG_MKT"},
+    {"name": "prnewswire",       "category": "markets",    "url": "https://www.prnewswire.com/rss/news-releases-list.rss",       "env_var": "RSS_PRNEWSWIRE"},
+
+    {"name": "coindesk_mkt",     "category": "crypto",     "url": "https://www.coindesk.com/arc/outboundfeeds/rss/?category=markets", "env_var": "RSS_COINDESK_MKT"},
+    {"name": "coindesk_policy",  "category": "crypto",     "url": "https://www.coindesk.com/arc/outboundfeeds/rss/?category=policy",  "env_var": "RSS_COINDESK_POLICY"},
+    {"name": "cointelegraph",    "category": "crypto",     "url": "https://cointelegraph.com/rss",                              "env_var": "RSS_COINTELEGRAPH"},
+    {"name": "decrypt",          "category": "crypto",     "url": "https://decrypt.co/feed",                                    "env_var": "RSS_DECRYPT"},
+    {"name": "blockbeats",       "category": "crypto",     "url": "https://api.theblockbeats.news/v1/open-api/home-xml",        "env_var": "RSS_BLOCKBEATS"},
+    {"name": "arthur_hayes",     "category": "crypto",     "url": "https://cryptohayes.medium.com/feed",                        "env_var": "RSS_ARTHUR_HAYES"},
+
+    {"name": "nvidia_blog",      "category": "ai_tech",    "url": "https://blogs.nvidia.com/feed/",                             "env_var": "RSS_NVIDIA_BLOG"},
+    {"name": "openai_blog",      "category": "ai_tech",    "url": "https://openai.com/blog/rss.xml",                            "env_var": "RSS_OPENAI_BLOG"},
+    {"name": "deepmind_blog",    "category": "ai_tech",    "url": "https://deepmind.google/blog/rss.xml",                       "env_var": "RSS_DEEPMIND_BLOG"},
+    {"name": "meta_ai_blog",     "category": "ai_tech",    "url": "https://engineering.fb.com/feed/",                           "env_var": "RSS_META_AI_BLOG"},
+
+    {"name": "reuters_markets",  "category": "news",       "url": "https://rss.app/feeds/r7iUM9tMkjvgeiBX.xml",                 "env_var": "RSS_REUTERS_MARKETS"},
+    {"name": "reuters_world",    "category": "news",       "url": "https://rss.app/feeds/JSsTuzKV4qYjE8qs.xml",                 "env_var": "RSS_REUTERS_WORLD"},
+    {"name": "breaking",         "category": "news",       "url": "https://breakingthenews.net/news-feed.xml",                  "env_var": "RSS_BREAKING_NEWS"},
+    {"name": "xinhua",           "category": "china",      "url": "https://plink.anyfeeder.com/newscn/whxw",                    "env_var": "RSS_XINHUA"},
+    {"name": "global_times",     "category": "china",      "url": "https://rss.app/feeds/Xi8UNvXAUZVPdrRn.xml",                 "env_var": "RSS_GLOBAL_TIMES"},
+    {"name": "tasnim",           "category": "geopolitics","url": "https://www.tasnimnews.ir/en/rss/feeds/1192/0/0/0",          "env_var": "RSS_TASNIM"}
+  ]
+}

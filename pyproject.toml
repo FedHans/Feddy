@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "marketbrief"
+version = "0.1.0"
+description = "AI-powered market intelligence framework — fetch, analyze, and deliver daily market briefings"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [
+    {name = "yukipan"},
+]
+keywords = ["market-analysis", "financial-data", "ai", "claude", "telegram", "mcp"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Financial and Insurance Industry",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Office/Business :: Financial :: Investment",
+]
+
+dependencies = [
+    "anthropic>=0.84.0",
+    "beautifulsoup4>=4.14.0",
+    "feedparser>=6.0.0",
+    "httpx>=0.28.0",
+    "lxml>=6.0.0",
+    "matplotlib>=3.9.0",
+    "numpy>=2.0.0",
+    "openpyxl>=3.1.0",
+    "pandas>=2.3.0",
+    "pillow>=11.0.0",
+    "pydantic>=2.12.0",
+    "python-dotenv>=1.2.0",
+    "requests>=2.32.0",
+    "yfinance>=0.2.54",
+]
+
+[project.optional-dependencies]
+mcp = ["mcp>=1.0.0"]
+
+[project.scripts]
+marketbrief = "marketbrief.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/yukipan/marketbrief"
+Repository = "https://github.com/yukipan/marketbrief"
+Issues = "https://github.com/yukipan/marketbrief/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/marketbrief"]

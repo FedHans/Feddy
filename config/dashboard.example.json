@@ -1,0 +1,55 @@
+{
+  "equities": [
+    {"label": "S&P 500",      "stooq": "^spx",    "yf": "^GSPC"},
+    {"label": "Nasdaq 100",   "stooq": "^ndx",    "yf": "^NDX"},
+    {"label": "Dow Jones",    "stooq": "^dji",    "yf": "^DJI"},
+    {"label": "Russell 2000", "stooq": "^rut",    "yf": "^RUT"}
+  ],
+  "precious_metals": [
+    {"label": "Gold",   "stooq": "xauusd", "yf": "GC=F"},
+    {"label": "Silver", "stooq": "xagusd", "yf": "SI=F"}
+  ],
+  "energy": [
+    {"label": "WTI Crude",   "stooq": "cl.f", "yf": "CL=F"},
+    {"label": "Brent Crude", "stooq": "cb.f", "yf": "BZ=F"}
+  ],
+  "metals_energy": [
+    {"label": "Gold",        "stooq": "xauusd", "yf": "GC=F"},
+    {"label": "Silver",      "stooq": "xagusd", "yf": "SI=F"},
+    {"label": "WTI Crude",   "stooq": "cl.f",   "yf": "CL=F"},
+    {"label": "Brent Crude", "stooq": "cb.f",   "yf": "BZ=F"}
+  ],
+  "rates": [
+    {"label": "US 10Y", "stooq": "10usy.b", "yf": "^TNX"}
+  ],
+  "volatility": [
+    {"label": "VIX", "stooq": "^vix", "yf": "^VIX"}
+  ],
+  "fx": [
+    {"label": "DXY",     "stooq": "dxy.f",  "yf": "DX-Y.NYB"},
+    {"label": "EUR/USD", "stooq": "eurusd", "yf": "EURUSD=X"},
+    {"label": "USD/JPY", "stooq": "usdjpy", "yf": "USDJPY=X"},
+    {"label": "GBP/USD", "stooq": "gbpusd", "yf": "GBPUSD=X"},
+    {"label": "USD/CAD", "stooq": "usdcad", "yf": "CAD=X"},
+    {"label": "AUD/USD", "stooq": "audusd", "yf": "AUDUSD=X"},
+    {"label": "USD/CNH", "stooq": "usdcnh", "yf": "USDCNH=X"}
+  ],
+  "sectors": [
+    {"label": "Tech (XLK)",       "stooq": "xlk.us", "yf": "XLK"},
+    {"label": "Energy (XLE)",     "stooq": "xle.us", "yf": "XLE"},
+    {"label": "Financials (XLF)", "stooq": "xlf.us", "yf": "XLF"},
+    {"label": "Healthcare (XLV)", "stooq": "xlv.us", "yf": "XLV"},
+    {"label": "Industrials (XLI)","stooq": "xli.us", "yf": "XLI"},
+    {"label": "Materials (XLB)",  "stooq": "xlb.us", "yf": "XLB"},
+    {"label": "Utilities (XLU)",  "stooq": "xlu.us", "yf": "XLU"},
+    {"label": "Disc. (XLY)",      "stooq": "xly.us", "yf": "XLY"},
+    {"label": "Staples (XLP)",    "stooq": "xlp.us", "yf": "XLP"},
+    {"label": "Comm. (XLC)",      "stooq": "xlc.us", "yf": "XLC"}
+  ],
+  "crypto_ids": ["bitcoin", "ethereum", "binancecoin", "solana"],
+  "etf_flows": {
+    "btc_etf": true,
+    "eth_etf": true,
+    "gold_etf": false
+  }
+}
