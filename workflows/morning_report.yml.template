@@ -1,0 +1,90 @@
+# MarketBrief — Automated Morning Report
+#
+# Copy this file to .github/workflows/morning_report.yml
+# Then configure repository secrets (Settings → Secrets → Actions):
+#   - ANTHROPIC_API_KEY (required for AI analysis)
+#   - TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID (for Telegram delivery)
+#   - FRED_API_KEY (optional, enhances economic data)
+#   - SOSOVALUE_API_KEY (optional, ETF flow data)
+#
+# Adjust the cron schedule to your timezone.
+
+name: Morning Report
+
+on:
+  schedule:
+    # ── Customize these times for your timezone ──
+    # Default: SGT (UTC+8) — adjust offsets for your region
+    #
+    # Example: US Eastern (UTC-5 / UTC-4 DST)
+    #   07:00 ET = 11:00/12:00 UTC
+    #   19:00 ET = 23:00/00:00 UTC
+    #
+    # Example: SGT (UTC+8)
+    #   07:00 SGT = 23:00 UTC (prev day)
+    #   19:00 SGT = 11:00 UTC
+    #
+    - cron: '0 23 * * 0-4'    # Morning brief (weekdays)
+    - cron: '0 11 * * 1-5'    # Evening brief (weekdays)
+  workflow_dispatch:  # manual trigger
+
+jobs:
+  generate-and-push:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install MarketBrief
+        run: pip install -e .
+
+      - name: Install Chromium (for PDF output)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq chromium-browser
+
+      - name: Create data directories
+        run: |
+          mkdir -p data/news_cache data/calendar_cache
+          mkdir -p reports/morning
+
+      - name: Restore cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            data/news_cache/
+            data/calendar_cache/
+          key: marketbrief-cache-${{ github.run_id }}
+          restore-keys: marketbrief-cache-
+
+      - name: Generate report
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SOSOVALUE_API_KEY: ${{ secrets.SOSOVALUE_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: marketbrief generate --output json
+
+      - name: Push to Telegram
+        if: success()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+        run: marketbrief push --channel telegram
+
+      - name: Save cache
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: |
+            data/news_cache/
+            data/calendar_cache/
+          key: marketbrief-cache-${{ github.run_id }}
