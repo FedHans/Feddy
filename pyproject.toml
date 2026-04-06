@@ -45,9 +45,9 @@ mcp = ["mcp>=1.0.0"]
 marketbrief = "marketbrief.__main__:main"
 
 [project.urls]
-Homepage = "https://github.com/yukipan/marketbrief"
-Repository = "https://github.com/yukipan/marketbrief"
-Issues = "https://github.com/yukipan/marketbrief/issues"
+Homepage = "https://github.com/yukipanpan/marketbrief"
+Repository = "https://github.com/yukipanpan/marketbrief"
+Issues = "https://github.com/yukipanpan/marketbrief/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/marketbrief"]
