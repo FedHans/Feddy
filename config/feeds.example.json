@@ -32,11 +32,11 @@
     {"name": "deepmind_blog",    "category": "ai_tech",    "url": "https://deepmind.google/blog/rss.xml",                       "env_var": "RSS_DEEPMIND_BLOG"},
     {"name": "meta_ai_blog",     "category": "ai_tech",    "url": "https://engineering.fb.com/feed/",                           "env_var": "RSS_META_AI_BLOG"},
 
-    {"name": "reuters_markets",  "category": "news",       "url": "https://rss.app/feeds/r7iUM9tMkjvgeiBX.xml",                 "env_var": "RSS_REUTERS_MARKETS"},
-    {"name": "reuters_world",    "category": "news",       "url": "https://rss.app/feeds/JSsTuzKV4qYjE8qs.xml",                 "env_var": "RSS_REUTERS_WORLD"},
+    {"name": "reuters_markets",  "category": "news",       "url": "",  "_note": "Create your own feed at rss.app or use a public Reuters RSS", "env_var": "RSS_REUTERS_MARKETS"},
+    {"name": "reuters_world",    "category": "news",       "url": "",  "_note": "Create your own feed at rss.app or use a public Reuters RSS", "env_var": "RSS_REUTERS_WORLD"},
     {"name": "breaking",         "category": "news",       "url": "https://breakingthenews.net/news-feed.xml",                  "env_var": "RSS_BREAKING_NEWS"},
     {"name": "xinhua",           "category": "china",      "url": "https://plink.anyfeeder.com/newscn/whxw",                    "env_var": "RSS_XINHUA"},
-    {"name": "global_times",     "category": "china",      "url": "https://rss.app/feeds/Xi8UNvXAUZVPdrRn.xml",                 "env_var": "RSS_GLOBAL_TIMES"},
+    {"name": "global_times",     "category": "china",      "url": "",  "_note": "Create your own feed at rss.app for Global Times", "env_var": "RSS_GLOBAL_TIMES"},
     {"name": "tasnim",           "category": "geopolitics","url": "https://www.tasnimnews.ir/en/rss/feeds/1192/0/0/0",          "env_var": "RSS_TASNIM"}
   ]
 }
