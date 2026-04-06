@@ -1,12 +1,15 @@
 """Retry utility for flaky external API calls."""
 
+from __future__ import annotations
+
 import logging
 import time
+from typing import Optional
 
 log = logging.getLogger("marketbrief")
 
 
-def retry(fn, max_attempts: int = 3, delay: float = 2.0, label: str | None = None):
+def retry(fn, max_attempts: int = 3, delay: float = 2.0, label: Optional[str] = None):
     """Retry a callable on exception (not empty results).
     Empty results are legitimate (e.g. weekend/market closed)."""
     tag = label or getattr(fn, "__name__", "call")
