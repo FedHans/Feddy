@@ -1,5 +1,9 @@
 # MarketBrief
 
+[![MarketBrief MCP server](https://glama.ai/mcp/servers/yukipanpan/marketbrief/badges/score.svg)](https://glama.ai/mcp/servers/yukipanpan/marketbrief)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+
 **Turn 40+ data sources into a daily Wall Street-style market briefing — delivered to your Telegram, automatically.**
 
 MarketBrief is an open-source framework that fetches real-time market data, aggregates news from 40+ RSS feeds, and uses Claude AI to generate structured analyst-grade reports. Think of it as your personal Bloomberg terminal distilled into a daily briefing.
