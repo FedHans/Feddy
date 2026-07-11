@@ -1,0 +1,10 @@
+
+============================================================
+  MarketBrief — data-only mode
+  Generated: 2026-07-10T00:44:08.909894
+============================================================
+
+  MARKET SNAPSHOT (first 20 lines):
+    === MARKET SNAPSHOT ===
+    
+    -- Precious Metals --

@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: crypto-news-bot
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: 8798845138:AAGVPd5K9_ItEdqyulLbXA9WpHTHzClTl4c
+        sync: false
+      - key: 7245319588
+        sync: false
