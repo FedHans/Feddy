@@ -275,5 +275,5 @@ def main():
         app.run_polling(allowed_updates=[])
 
 if __name__ == "__main__":
-    print("🤖 Crypto Bot is starting...")
+    print("🤖 Crypto Bot is starting on Railway...")
     main()
