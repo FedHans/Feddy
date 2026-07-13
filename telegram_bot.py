@@ -254,14 +254,10 @@ def main():
     print("🤖 Crypto Bot is starting...")
     print(f"📱 Running on: {'Railway' if IS_RAILWAY else 'Local'}")
     print("Commands: /start, /help, /fundamentals [coin], /daily, /portfolio")
+    print("🔄 Starting polling mode...")
     
-    if IS_RAILWAY:
-    print("📱 Running on Railway - using polling mode...")
-    app.run_polling(allowed_updates=[])
-else:
-    print("📱 Running locally - using polling mode...")
+    # Simply use polling mode - works everywhere!
     app.run_polling(allowed_updates=[])
 
 if __name__ == "__main__":
-    print("🤖 Crypto Bot is starting on Railway...")
     main()
