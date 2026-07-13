@@ -256,23 +256,11 @@ def main():
     print("Commands: /start, /help, /fundamentals [coin], /daily, /portfolio")
     
     if IS_RAILWAY:
-        # On Railway, use webhook
-        railway_domain = os.environ.get('RAILWAY_PUBLIC_DOMAIN', '')
-        if railway_domain:
-            webhook_url = f"https://{railway_domain}/{TOKEN}"
-            print(f"🔗 Setting webhook to: {webhook_url}")
-            app.run_webhook(
-                listen="0.0.0.0",
-                port=int(os.environ.get('PORT', 5000)),
-                url_path=TOKEN,
-                webhook_url=webhook_url
-            )
-        else:
-            print("⚠️ RAILWAY_PUBLIC_DOMAIN not set. Falling back to polling...")
-            app.run_polling(allowed_updates=[])
-    else:
-        # Local development - use polling
-        app.run_polling(allowed_updates=[])
+    print("📱 Running on Railway - using polling mode...")
+    app.run_polling(allowed_updates=[])
+else:
+    print("📱 Running locally - using polling mode...")
+    app.run_polling(allowed_updates=[])
 
 if __name__ == "__main__":
     print("🤖 Crypto Bot is starting on Railway...")
