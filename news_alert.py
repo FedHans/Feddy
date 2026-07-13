@@ -4,24 +4,41 @@ import requests
 from datetime import datetime
 import feedparser
 import time
+import os
+import json
 
 TOKEN = "8798845138:AAGVPd5K9_ItEdqyulLbXA9WpHTHzClTl4c"
 CHAT_ID = "7245319588"
 
-# Track seen articles to avoid duplicates
-seen_articles = set()
+# File to store seen articles
+SEEN_FILE = "sent_news.json"
+
+def load_seen_articles():
+    """Load seen articles from file"""
+    if os.path.exists(SEEN_FILE):
+        try:
+            with open(SEEN_FILE, "r", encoding="utf-8") as f:
+                return set(json.load(f))
+        except:
+            return set()
+    return set()
+
+def save_seen_articles(seen_set):
+    """Save seen articles to file"""
+    with open(SEEN_FILE, "w", encoding="utf-8") as f:
+        json.dump(list(seen_set), f)
+
+# Load previously seen articles
+seen_articles = load_seen_articles()
+print(f"📚 Loaded {len(seen_articles)} previously sent articles")
 
 def analyze_impact(title):
     """Simple keyword-based impact analysis"""
     title_lower = title.lower()
     
-    # Strong bullish keywords
     bullish_strong = ["surge", "rally", "moon", "all-time high", "ath", "breakthrough", "approval", "inflow record", "massive"]
-    # Bullish keywords
     bullish = ["gain", "bullish", "approval", "inflow", "adoption", "partnership", "green", "growth", "positive", "up"]
-    # Bearish keywords
     bearish = ["crash", "decline", "bearish", "reject", "ban", "restrict", "fine", "investigate", "drops", "plunge"]
-    # Strong bearish keywords
     bearish_strong = ["collapse", "disaster", "wipeout", "catastrophe", "crisis", "bankruptcy"]
     
     if any(word in title_lower for word in bullish_strong):
@@ -37,11 +54,12 @@ def analyze_impact(title):
 
 async def check_for_news():
     """Check for new crypto news and send alerts"""
+    global seen_articles
     bot = Bot(token=TOKEN)
     print(f"🔍 Monitoring for news... (Started at {datetime.now().strftime('%H:%M:%S')})")
+    print(f"📰 Loaded {len(seen_articles)} previously sent articles")
     print("📰 Will alert you when news breaks!")
     
-    # RSS feeds to monitor
     rss_feeds = [
         {"url": "https://cointelegraph.com/rss", "name": "CoinTelegraph"},
         {"url": "https://www.coindesk.com/arc/outboundfeeds/rss/", "name": "CoinDesk"},
@@ -55,21 +73,17 @@ async def check_for_news():
                 try:
                     feed = feedparser.parse(feed_source["url"])
                     
-                    # Get latest entries (check new ones)
                     for entry in feed.entries[:5]:
                         article_id = entry.link if hasattr(entry, 'link') else entry.title
                         
-                        # Skip if already seen
                         if article_id in seen_articles:
                             continue
                         
-                        # Add to seen
                         seen_articles.add(article_id)
+                        save_seen_articles(seen_articles)  # Save immediately
                         
-                        # Analyze impact
                         impact, impact_desc = analyze_impact(entry.title)
                         
-                        # Build alert message
                         alert = f"""
 ⚠️ **NEW CRYPTO NEWS ALERT**
 
@@ -84,21 +98,16 @@ async def check_for_news():
 🔗 Read more: {entry.link if hasattr(entry, 'link') else 'Link unavailable'}
 """
                         
-                        # Send alert to Telegram
                         await bot.send_message(chat_id=CHAT_ID, text=alert)
                         print(f"✅ Alert sent: {entry.title[:50]}...")
-                        
-                        # Small delay to avoid rate limiting
                         await asyncio.sleep(1)
                         
                 except Exception as e:
-                    # If one feed fails, continue with others
                     continue
                     
         except Exception as e:
             print(f"⚠️ Error in main loop: {e}")
         
-        # Wait 30 seconds before checking again
         await asyncio.sleep(30)
 
 if __name__ == "__main__":
@@ -114,3 +123,4 @@ if __name__ == "__main__":
         asyncio.run(check_for_news())
     except KeyboardInterrupt:
         print("\n👋 Stopped monitoring. Goodbye!")
+        save_seen_articles(seen_articles)
