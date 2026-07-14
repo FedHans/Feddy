@@ -1,7 +1,8 @@
-python-telegram-bot[webhooks]
+python-telegram-bot
 requests
 feedparser
 pandas
 numpy
 flask
 gunicorn
+schedule

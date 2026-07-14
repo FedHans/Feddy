@@ -1,10 +1,12 @@
 import os
 import asyncio
-from telegram import Update
-from telegram.ext import Application, CommandHandler, ContextTypes
+import time
+import schedule
 import requests
-from datetime import datetime
 import feedparser
+from datetime import datetime
+from telegram import Update, Bot
+from telegram.ext import Application, CommandHandler, ContextTypes
 from technical_analysis import generate_portfolio_report
 
 # ============================================================
@@ -33,6 +35,8 @@ def get_coin_fundamentals(coin_name):
             return f"❌ Coin '{coin_name}' not found. Please check the name."
         
         coin_id = search_data["coins"][0]["id"]
+        coin_name_from_api = search_data["coins"][0]["name"]
+        coin_symbol = search_data["coins"][0]["symbol"]
         
         response = requests.get(
             f"https://api.coingecko.com/api/v3/coins/{coin_id}",
@@ -47,6 +51,10 @@ def get_coin_fundamentals(coin_name):
         )
         data = response.json()
         market_data = data.get("market_data", {})
+        
+        # Check if market_data exists
+        if not market_data:
+            return f"❌ No market data available for '{coin_name}'"
         
         # Price
         current_price = market_data.get('current_price', {}).get('usd', 0)
@@ -106,7 +114,7 @@ def get_coin_fundamentals(coin_name):
         
         # Build the report
         report = f"""
-📊 **{data['name'].upper()} ({data['symbol'].upper()})** - Fundamentals
+📊 **{coin_name_from_api.upper()} ({coin_symbol.upper()})** - Fundamentals
 
 💰 **Price & Market Data**
   Price: ${current_price:,.2f}
@@ -129,7 +137,7 @@ def get_coin_fundamentals(coin_name):
   30d: {price_change_30d:+.2f}%
   Overall: {trend}
 
-💡 {data['name']} is trading at ${current_price:,.2f} with {circulating_supply:,.0f} tokens in circulation. {'Bullish momentum' if price_change_24h > 0 else 'Bearish pressure'} over the last 24 hours.
+💡 {coin_name_from_api} is trading at ${current_price:,.2f} with {circulating_supply:,.0f} tokens in circulation. {'Bullish momentum' if price_change_24h > 0 else 'Bearish pressure'} over the last 24 hours.
 
 _Data: CoinGecko | DYOR_
 """
@@ -185,6 +193,47 @@ def get_daily_report():
         return report
     except Exception as e:
         return f"📊 Daily report temporarily unavailable: {str(e)}"
+
+# ============================================================
+# SCHEDULED TASKS
+# ============================================================
+async def send_portfolio_report():
+    """Send portfolio report to Telegram"""
+    try:
+        bot = Bot(token=TOKEN)
+        report = generate_portfolio_report()
+        
+        if len(report) > 4096:
+            for i in range(0, len(report), 4096):
+                await bot.send_message(chat_id=CHAT_ID, text=report[i:i+4096])
+                await asyncio.sleep(0.5)
+        else:
+            await bot.send_message(chat_id=CHAT_ID, text=report)
+        print("✅ Daily portfolio report sent!")
+    except Exception as e:
+        print(f"❌ Error sending portfolio report: {e}")
+
+async def send_daily_report():
+    """Send daily market briefing"""
+    try:
+        bot = Bot(token=TOKEN)
+        report = get_daily_report()
+        await bot.send_message(chat_id=CHAT_ID, text=report)
+        print("✅ Daily market briefing sent!")
+    except Exception as e:
+        print(f"❌ Error sending daily report: {e}")
+
+def schedule_daily_tasks():
+    """Schedule daily tasks"""
+    # Schedule portfolio report at 8:00 AM
+    schedule.every().day.at("08:00").do(
+        lambda: asyncio.create_task(send_portfolio_report())
+    )
+    # Schedule daily briefing at 8:30 AM
+    schedule.every().day.at("08:30").do(
+        lambda: asyncio.create_task(send_daily_report())
+    )
+    print("📅 Daily tasks scheduled: 8:00 AM (Portfolio), 8:30 AM (Briefing)")
 
 # ============================================================
 # TELEGRAM COMMANDS
@@ -254,9 +303,22 @@ def main():
     print("🤖 Crypto Bot is starting...")
     print(f"📱 Running on: {'Railway' if IS_RAILWAY else 'Local'}")
     print("Commands: /start, /help, /fundamentals [coin], /daily, /portfolio")
-    print("🔄 Starting polling mode...")
     
-    # Simply use polling mode - works everywhere!
+    # Schedule daily tasks
+    schedule_daily_tasks()
+    
+    # Start a background thread for the scheduler
+    import threading
+    def run_scheduler():
+        while True:
+            schedule.run_pending()
+            time.sleep(60)
+    
+    scheduler_thread = threading.Thread(target=run_scheduler, daemon=True)
+    scheduler_thread.start()
+    print("🔄 Scheduler started - will run tasks at scheduled times")
+    
+    print("🔄 Starting polling mode...")
     app.run_polling(allowed_updates=[])
 
 if __name__ == "__main__":
